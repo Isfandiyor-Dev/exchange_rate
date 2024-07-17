@@ -20,8 +20,8 @@ class CurrencyService {
       }
     } catch (e) {
       print("Get qilishda hatolik bo'ldi: $e");
-      // throw Exception("Xatolik yuz berdi: $e");
-      rethrow;
+      throw Exception("Xatolik yuz berdi: $e");
+      // rethrow;
     }
   }
 }

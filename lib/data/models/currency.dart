@@ -19,16 +19,27 @@ class Currency {
 
   factory Currency.fromJson(Map<String, dynamic> json) {
     final dateFormat = DateFormat('dd.MM.yyyy HH:mm:ss');
+
+    // print("Parsing currency: $json");
+
+    double? parseDouble(String value) {
+      if (value.isEmpty) {
+        return null;
+      }
+      try {
+        return double.parse(value.replaceAll(',', ''));
+      } catch (e) {
+        print("Failed to parse double: $value");
+        rethrow;
+      }
+    }
+
     return Currency(
       title: json['title'],
       code: json['code'],
-      cbPrice: double.parse(json['cb_price']),
-      nbuBuyPrice: json['nbu_buy_price'] != null
-          ? double.parse(json['nbu_buy_price'])
-          : null,
-      nbuCellPrice: json['nbu_cell_price'] != null
-          ? double.parse(json['nbu_cell_price'])
-          : null,
+      cbPrice: parseDouble(json['cb_price'])!,
+      nbuBuyPrice: parseDouble(json['nbu_buy_price'] ?? ''),
+      nbuCellPrice: parseDouble(json['nbu_cell_price'] ?? ''),
       date: dateFormat.parse(json['date']),
     );
   }

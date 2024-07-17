@@ -10,13 +10,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final TextEditingController firstTextController = TextEditingController(
-    text: "0",
-  );
+  final TextEditingController firstTextController =
+      TextEditingController(text: "0");
 
-  final TextEditingController secondTextController = TextEditingController(
-    text: "0",
-  );
+  final TextEditingController secondTextController =
+      TextEditingController(text: "0");
 
   Currency? firstCurrency;
   Currency? secondCurrency;
@@ -26,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-   void onChanged({
+  void onChanged({
     required String? value,
     required Currency firstCurrency,
     required Currency secondCurrency,
@@ -35,12 +33,12 @@ class _HomePageState extends State<HomePage> {
     if (isFirstField) {
       double result =
           (firstCurrency.nbuBuyPrice! / secondCurrency.nbuBuyPrice!) *
-              num.parse(firstTextController.text);
+              double.parse(firstTextController.text);
       secondTextController.text = result.toStringAsFixed(3);
     } else {
       double result =
           (secondCurrency.nbuBuyPrice! / firstCurrency.nbuBuyPrice!) *
-              num.parse(secondTextController.text);
+              double.parse(secondTextController.text);
       firstTextController.text = result.toStringAsFixed(3);
     }
   }
@@ -50,14 +48,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Konvertatsiya aniqligi"),
+        title: const Text("Konvertatsiya"),
         actions: [
           IconButton(
             onPressed: () {
               firstTextController.text = "0";
               secondTextController.text = "0";
-              // firstTextController.clear();
-              // secondTextController.clear();
             },
             icon: const Icon(
               Icons.clear_rounded,
@@ -73,11 +69,14 @@ class _HomePageState extends State<HomePage> {
               children: [
                 TextButton.icon(
                   onPressed: () async {
-                    firstCurrency = await showModalBottomSheet(
+                    var currency = await showModalBottomSheet(
                       context: context,
                       builder: (ctx) => const MyBottomSheet(),
                     );
-                    setState(() {});
+                    if (currency != null) {
+                      firstCurrency = currency;
+                      setState(() {});
+                    }
                   },
                   label: Text(
                     firstCurrency?.code ?? "",
@@ -121,11 +120,14 @@ class _HomePageState extends State<HomePage> {
               children: [
                 TextButton.icon(
                   onPressed: () async {
-                    secondCurrency = await showModalBottomSheet(
+                    var currency = await showModalBottomSheet(
                       context: context,
                       builder: (ctx) => const MyBottomSheet(),
                     );
-                    setState(() {});
+                    if (currency != null) {
+                      secondCurrency = currency;
+                      setState(() {});
+                    }
                   },
                   label: Text(
                     secondCurrency?.code ?? "",

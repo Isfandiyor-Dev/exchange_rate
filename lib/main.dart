@@ -2,11 +2,13 @@ import 'package:exchange_rate/core/app.dart';
 import 'package:exchange_rate/data/repositories/currency_repository.dart';
 import 'package:exchange_rate/logic/bloc/currency_block.dart';
 import 'package:exchange_rate/logic/bloc/currency_events.dart';
+import 'package:exchange_rate/logic/observer/my_bloc_observer.dart';
 import 'package:exchange_rate/services/currency_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
+  Bloc.observer = MyBlocObserver();
   runApp(
     MultiRepositoryProvider(
       providers: [
